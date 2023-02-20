@@ -8,9 +8,11 @@ public class UI_Inventory : MonoBehaviour
     private Transform itemSlotContainer;
     private Transform itemSlotTemplate;
     
-    private void Start() {
+    private void Awake() {
         itemSlotContainer = transform.Find("itemSlotContainer");
         itemSlotTemplate = transform.Find("itemSlotTemplate");
+        Debug.Log(itemSlotContainer);
+        Debug.Log(itemSlotTemplate);
     }
     
     public void SetInventory(Inventory inventory) {
@@ -19,9 +21,9 @@ public class UI_Inventory : MonoBehaviour
     }
     
     private void RefreshInventoryItems() {
-        int x = 0;
-        int y = 0;
-        float itemSlotCellSize = 30f;
+        float x = 0;
+        float y = 0;
+        float itemSlotCellSize = 85f;
         foreach (Item item in inventory.GetItemList()) {
             RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
