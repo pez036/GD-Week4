@@ -6,14 +6,8 @@ public class CameraController : MonoBehaviour
 {
     public float followSpeed = 6;
     public Transform player;
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void FixedUpdate() {
         updateMovement();
     }
     void updateMovement() {
