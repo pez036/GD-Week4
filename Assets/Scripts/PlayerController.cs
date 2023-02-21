@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask treeLayer;
     public LayerMask depositeLayer;
     public InventoryManager inventoryManager;
+    public CollectedCount collectedCount;
 
     Vector2 playerMovement;
     float PlayerSize = 5f;
@@ -72,7 +73,8 @@ public class PlayerController : MonoBehaviour
     void Deposite() {
         Collider2D[] deposites = Physics2D.OverlapCircleAll(transform.position, harvestRange, depositeLayer);
         if (deposites.Length > 0) {
-            inventoryManager.DepositeFruit();
+            int picked = inventoryManager.DepositeFruit();
+            collectedCount.UpdateCount(picked);
             //Debug.Log("deposite " + fruitInventory + " fruits");
             //fruitInventory = 0;
         }

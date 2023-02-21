@@ -58,7 +58,7 @@ public class InventoryManager : MonoBehaviour
         PickupItem(1);
     }
 
-    public void DepositeFruit() {
+    public int DepositeFruit() {
         int totalFruits = 0;
         for (int i = 0; i < inventorySlots.Length; ++i) {
             InventorySlot slot = inventorySlots[i];
@@ -69,7 +69,7 @@ public class InventoryManager : MonoBehaviour
                 Destroy(itemInSlot.gameObject);
             }
         }
-        //Debug.Log("Deposite " + totalFruits);
+        return totalFruits;
     }
 
     public void deleteHoe() {
