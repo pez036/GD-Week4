@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public Animator anim;
     public LayerMask treeLayer;
     public LayerMask depositeLayer;
+    public InventoryManager inventoryManager;
+
     Vector2 playerMovement;
     float PlayerSize = 5f;
     float harvestRange = 1f;
@@ -75,6 +77,11 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Hoe")) {
             harvestRate = 2;
             toolEndurance = 2;
+            bool result = inventoryManager.PickupItem(1);
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Apple")) {
+            bool result = inventoryManager.PickupItem(0);
             Destroy(collision.gameObject);
         }
     }
