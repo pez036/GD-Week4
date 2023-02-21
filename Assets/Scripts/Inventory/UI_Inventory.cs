@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UI_Inventory : MonoBehaviour
 {
@@ -12,8 +13,6 @@ public class UI_Inventory : MonoBehaviour
     private void Awake() {
         itemSlotContainer = transform.Find("itemSlotContainer");
         itemSlotTemplate = transform.Find("itemSlotTemplate");
-        Debug.Log(itemSlotContainer);
-        Debug.Log(itemSlotTemplate);
     }
     
     public void SetInventory(Inventory inventory) {
@@ -43,8 +42,16 @@ public class UI_Inventory : MonoBehaviour
             itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
             Image image = itemSlotRectTransform.Find("image").GetComponent<Image>();
             image.sprite = item.GetSprite();
-            x++;
             
+            TextMeshProUGUI uiText = itemSlotRectTransform.Find("text").GetComponent<TextMeshProUGUI>();
+            if (item.amount > 1) {
+                uiText.SetText(item.amount.ToString());
+            } else {
+                uiText.SetText("");
+            }
+            
+            
+            x++;
             // TODO: change based on size of this inventory
             // TODO: limit inventory
             if (x > 10) {
