@@ -13,4 +13,14 @@ public class Item
     
     public ItemType itemType;
     public int amount;
+    
+    public Sprite GetSprite() {
+        switch(itemType) {
+        default:
+        case ItemType.Apple:        return ItemAssets.Instance.appleSprite;
+        case ItemType.DashPotion:   return ItemAssets.Instance.dashPotionSprite;
+        case ItemType.Axe:          return ItemAssets.Instance.axeSprite;
+        case ItemType.Sword:        return ItemAssets.Instance.swordSprite;
+        }
+    }
 }
