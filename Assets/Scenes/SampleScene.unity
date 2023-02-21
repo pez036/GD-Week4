@@ -2938,7 +2938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     itemType: 2
-    amount: 0
+    amount: 1
 --- !u!4 &351829898
 Transform:
   m_ObjectHideFlags: 0
@@ -3759,7 +3759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     itemType: 1
-    amount: 0
+    amount: 1
 --- !u!4 &1672914064
 Transform:
   m_ObjectHideFlags: 0
@@ -3859,7 +3859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     itemType: 0
-    amount: 0
+    amount: 1
 --- !u!4 &1717607043
 Transform:
   m_ObjectHideFlags: 0
@@ -4084,7 +4084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     itemType: 3
-    amount: 0
+    amount: 1
 --- !u!4 &2057589557
 Transform:
   m_ObjectHideFlags: 0
