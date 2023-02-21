@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -32,11 +33,31 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    public bool PickupItem(int id) {
-        if (id < items.Length) {
-            return AddItem(items[id]);
+    public bool PickupItem(int itemId) {
+        if (itemId < items.Length) {
+            return AddItem(items[itemId]);
         }
         return false;
+    }
+
+    public void GetFruit(int count) {
+        for (int i = 0; i < count; ++i) {
+            PickupItem(0);
+        }
+    }
+
+    public void DepositeFruit() {
+        int totalFruits = 0;
+        for (int i = 0; i < inventorySlots.Length; ++i) {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+
+            if (itemInSlot != null && itemInSlot.item == items[0]) {
+                totalFruits += itemInSlot.count;
+                Destroy(itemInSlot.gameObject);
+            }
+        }
+        //Debug.Log("Deposite " + totalFruits);
     }
 
     void SpawnNewItem(Item item, InventorySlot slot) {

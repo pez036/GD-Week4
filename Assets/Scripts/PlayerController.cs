@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     Vector2 playerMovement;
     float PlayerSize = 5f;
     float harvestRange = 1f;
-    int fruitInventory = 0;
+    //int fruitInventory = 0;
     int harvestRate = 1;
     int toolEndurance = 0;
     void Start()
@@ -56,20 +56,24 @@ public class PlayerController : MonoBehaviour
         Collider2D[] reachableTrees = Physics2D.OverlapCircleAll(transform.position, harvestRange, treeLayer);
         foreach (Collider2D tree in reachableTrees) {
             toolEndurance -= 1;
-            fruitInventory += tree.gameObject.GetComponent<TreeController>().pickFruit(harvestRate);
+            int fruitToPick = tree.gameObject.GetComponent<TreeController>().pickFruit(harvestRate);
+            //Debug.Log("get " + fruitToPick);
+            inventoryManager.GetFruit(fruitToPick);
+            //fruitInventory += fruitToPick;
             if (toolEndurance <= 0) {
                 toolEndurance = 0;
                 harvestRate = 1;
             }
         }
-        Debug.Log("harvest " + fruitInventory + " fruits");
+        //Debug.Log("harvest " + fruitInventory + " fruits");
     }
 
     void Deposite() {
         Collider2D[] deposites = Physics2D.OverlapCircleAll(transform.position, harvestRange, depositeLayer);
         if (deposites.Length > 0) {
-            Debug.Log("deposite " + fruitInventory + " fruits");
-            fruitInventory = 0;
+            inventoryManager.DepositeFruit();
+            //Debug.Log("deposite " + fruitInventory + " fruits");
+            //fruitInventory = 0;
         }
     }
 
@@ -81,7 +85,7 @@ public class PlayerController : MonoBehaviour
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Apple")) {
-            bool result = inventoryManager.PickupItem(0);
+            inventoryManager.GetFruit(1);
             Destroy(collision.gameObject);
         }
     }
