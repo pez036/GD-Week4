@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using CodeMonkey.Utils;
 
 public class UI_Inventory : MonoBehaviour
 {
     private Inventory inventory;
     private Transform itemSlotContainer;
     private Transform itemSlotTemplate;
+    private Player player;
     
     private void Awake() {
         itemSlotContainer = transform.Find("itemSlotContainer");
         itemSlotTemplate = transform.Find("itemSlotTemplate");
     }
     
+    public void SetPlayer(Player player) {
+        this.player = player;
+    }
     public void SetInventory(Inventory inventory) {
         this.inventory = inventory;
         
@@ -39,6 +44,11 @@ public class UI_Inventory : MonoBehaviour
         foreach (Item item in inventory.GetItemList()) {
             RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
+            
+            itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => {
+                // use item
+                inventory.UseItem(item);
+            };
             
             itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
             Image image = itemSlotRectTransform.Find("image").GetComponent<Image>();

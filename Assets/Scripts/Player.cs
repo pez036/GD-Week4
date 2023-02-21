@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
     [SerializeField] private UI_Inventory uiInventory;
     
     private void Start() {
-        inventory = new Inventory();
+        inventory = new Inventory(UseItem);
+        uiInventory.SetPlayer(this);
         uiInventory.SetInventory(inventory);
     }
     
@@ -18,6 +19,24 @@ public class Player : MonoBehaviour
             // touching item
             inventory.AddItem(itemWorld.GetItem());
             itemWorld.DestroySelf();
+        }
+    }
+    
+    private void UseItem(Item item) {
+        switch (item.itemType) {
+            case Item.ItemType.Apple:
+                // drop
+                break;
+            case Item.ItemType.DashPotion:
+                // increase player speed briefly
+                inventory.RemoveItem(new Item { itemType = Item.ItemType.DashPotion, amount = 1});
+                break;
+            case Item.ItemType.Axe:
+                // ability to pick apples
+                break;
+            case Item.ItemType.Sword:
+                // kill animals
+                break;
         }
     }
 }
