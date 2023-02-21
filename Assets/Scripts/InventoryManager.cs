@@ -46,6 +46,18 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void GetHoe() {
+        for (int i = 0; i < inventorySlots.Length; ++i) {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+
+            if (itemInSlot != null && itemInSlot.item == items[1]) {
+                return;
+            }
+        }
+        PickupItem(1);
+    }
+
     public void DepositeFruit() {
         int totalFruits = 0;
         for (int i = 0; i < inventorySlots.Length; ++i) {
@@ -58,6 +70,18 @@ public class InventoryManager : MonoBehaviour
             }
         }
         //Debug.Log("Deposite " + totalFruits);
+    }
+
+    public void deleteHoe() {
+        for (int i = 0; i < inventorySlots.Length; ++i) {
+            InventorySlot slot = inventorySlots[i];
+            InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
+
+            if (itemInSlot != null && itemInSlot.item == items[1]) {
+                Destroy(itemInSlot.gameObject);
+                return;
+            }
+        }
     }
 
     void SpawnNewItem(Item item, InventorySlot slot) {

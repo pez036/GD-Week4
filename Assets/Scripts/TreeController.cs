@@ -7,7 +7,7 @@ public class TreeController : MonoBehaviour
     int fruitCount;
     // Start is called before the first frame update
     void Start() {
-        fruitCount = 2;
+        fruitCount = Random.Range(1, 10);
     }
 
     public int pickFruit(int harvestRate) {

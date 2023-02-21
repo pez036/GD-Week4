@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
             if (toolEndurance <= 0) {
                 toolEndurance = 0;
                 harvestRate = 1;
+                inventoryManager.deleteHoe();
             }
         }
         //Debug.Log("harvest " + fruitInventory + " fruits");
@@ -81,7 +82,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Hoe")) {
             harvestRate = 2;
             toolEndurance = 2;
-            bool result = inventoryManager.PickupItem(1);
+            inventoryManager.GetHoe();
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Apple")) {
