@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     //int fruitInventory = 0;
     int harvestRate = 1;
     int toolEndurance = 0;
+    int fruitCountGoal = 10;
 
     // Update is called once per frame
     void Update()
@@ -77,7 +79,10 @@ public class PlayerController : MonoBehaviour
         if (deposites.Length > 0) {
             depositeSound.Play();
             int picked = inventoryManager.DepositeFruit();
-            collectedCount.UpdateCount(picked);
+            int currentPicked = collectedCount.UpdateCount(picked);
+            if (currentPicked >= fruitCountGoal) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
     }
 

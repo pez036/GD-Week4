@@ -13,8 +13,9 @@ public class CollectedCount : MonoBehaviour
         countText.text = "x " + count.ToString();
     }
 
-    public void UpdateCount(int countToAdd) {
+    public int UpdateCount(int countToAdd) {
         count += countToAdd;
         countText.text = "x " + count.ToString();
+        return count;
     }
 }
