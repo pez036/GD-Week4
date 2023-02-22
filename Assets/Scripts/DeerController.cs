@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Tilemaps;
 
 public class DeerController : MonoBehaviour
 {
+    public BoxCollider2D playerCollider;
+    public TilemapCollider2D obstacles;
     Vector2 position;
     
     GameObject [] apples;
@@ -12,13 +15,18 @@ public class DeerController : MonoBehaviour
     
     BoxCollider2D thisCollider;
     BoxCollider2D appleCollider;
-    
+    float moveSpeed = 0.005f;
+    float harvestRate = 5;
+
+
     void Start()
     {
         thisCollider = gameObject.GetComponent<BoxCollider2D>();
-        apples = GameObject.FindGameObjectsWithTag("Apple");
+        apples = GameObject.FindGameObjectsWithTag("Tree");
         appleToEat = determineClosestApple();
         appleCollider = appleToEat.GetComponent<BoxCollider2D>();
+        Physics2D.IgnoreCollision(thisCollider, playerCollider);
+        Physics2D.IgnoreCollision(thisCollider, obstacles);
     }
     
     void FixedUpdate() {
@@ -59,10 +67,13 @@ public class DeerController : MonoBehaviour
     {
         // edit this to change movement
         //Vector2 newPos = new Vector2(position.x + 0.001f, position.y);
-        
         Vector2 newPos = transform.position;
         if (appleToEat != null) {
-            newPos = Vector2.MoveTowards(transform.position, appleToEat.transform.position, 0.0005f);
+            newPos = Vector2.MoveTowards(transform.position, appleToEat.transform.position, moveSpeed);
+        }
+        else {
+            appleToEat = determineClosestApple();
+            newPos = Vector2.MoveTowards(transform.position, appleToEat.transform.position, moveSpeed);
         }
         
         transform.position = newPos;
@@ -71,9 +82,9 @@ public class DeerController : MonoBehaviour
             if (thisCollider.IsTouching(appleCollider))
             {
                 // Do somet$$anonymous$$ng;
-                Debug.Log("HELLO");
+                //Debug.Log("HELLO");
                 
-                Destroy(appleToEat, 4);
+                Destroy(appleToEat, appleToEat.GetComponent<TreeController>().fruitCount / harvestRate);
                 
                 appleToEat = determineClosestApple();
             }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TreeController : MonoBehaviour
 {
-    int fruitCount;
+    public int fruitCount;
     // Start is called before the first frame update
     void Start() {
         fruitCount = Random.Range(6, 10);

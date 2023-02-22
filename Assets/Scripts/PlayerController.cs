@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     //int fruitInventory = 0;
     int harvestRate = 1;
     int toolEndurance = 0;
-    int fruitCountGoal = 10;
+    int fruitCountGoal = 20;
 
     // Update is called once per frame
     void Update()
@@ -35,6 +35,9 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.C)) {
             Deposite();
+        }
+        if (Input.GetKeyDown(KeyCode.R)) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 

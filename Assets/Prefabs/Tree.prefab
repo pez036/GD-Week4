@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2960982958233006798}
   m_Layer: 3
   m_Name: Tree
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,4 +124,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ac431c2b25f50f48909251931f406b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitCount: 0
