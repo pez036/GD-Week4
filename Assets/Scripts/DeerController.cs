@@ -62,7 +62,7 @@ public class DeerController : MonoBehaviour
         
         Vector2 newPos = transform.position;
         if (appleToEat != null) {
-            newPos = Vector2.Lerp(transform.position, appleToEat.transform.position, Time.deltaTime);
+            newPos = Vector2.MoveTowards(transform.position, appleToEat.transform.position, 0.0005f);
         }
         
         transform.position = newPos;
