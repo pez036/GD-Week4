@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask depositeLayer;
     public InventoryManager inventoryManager;
     public CollectedCount collectedCount;
+    public PlayerTool toolInHand;
 
     Vector2 playerMovement;
     float PlayerSize = 5f;
@@ -18,10 +19,6 @@ public class PlayerController : MonoBehaviour
     //int fruitInventory = 0;
     int harvestRate = 1;
     int toolEndurance = 0;
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -30,7 +27,7 @@ public class PlayerController : MonoBehaviour
         playerMovement.y = Input.GetAxisRaw("Vertical");
         anim.SetFloat("Speed", playerMovement.magnitude);
         if (Input.GetKeyDown(KeyCode.Space)) {
-            Harvest();
+            anim.SetTrigger("SwingTool");
         }
         if (Input.GetKeyDown(KeyCode.C)) {
             Deposite();
@@ -53,18 +50,17 @@ public class PlayerController : MonoBehaviour
         transform.localScale = new Vector3(bLeft ? PlayerSize : -PlayerSize, PlayerSize, PlayerSize);
     }
 
-    void Harvest() {
+    public void Harvest() {
         Collider2D[] reachableTrees = Physics2D.OverlapCircleAll(transform.position, harvestRange, treeLayer);
         foreach (Collider2D tree in reachableTrees) {
             toolEndurance -= 1;
             int fruitToPick = tree.gameObject.GetComponent<TreeController>().pickFruit(harvestRate);
-            //Debug.Log("get " + fruitToPick);
             inventoryManager.GetFruit(fruitToPick);
-            //fruitInventory += fruitToPick;
             if (toolEndurance <= 0) {
                 toolEndurance = 0;
                 harvestRate = 1;
                 inventoryManager.deleteHoe();
+                toolInHand.lostTool();
             }
         }
         //Debug.Log("harvest " + fruitInventory + " fruits");
@@ -85,6 +81,7 @@ public class PlayerController : MonoBehaviour
             harvestRate = 2;
             toolEndurance = 2;
             inventoryManager.GetHoe();
+            toolInHand.getTool(2);
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Apple")) {
