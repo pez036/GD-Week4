@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -46,16 +45,17 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void GetHoe() {
+    public void GetTool(int id) {
         for (int i = 0; i < inventorySlots.Length; ++i) {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
 
-            if (itemInSlot != null && itemInSlot.item == items[1]) {
-                return;
+            if (itemInSlot != null && (itemInSlot.item == items[1] || itemInSlot.item == items[2] || itemInSlot.item == items[3])) {
+                Debug.Log("already have tool");
+                Destroy(itemInSlot.gameObject);
             }
         }
-        PickupItem(1);
+        PickupItem(id);
     }
 
     public int DepositeFruit() {
@@ -72,12 +72,12 @@ public class InventoryManager : MonoBehaviour
         return totalFruits;
     }
 
-    public void deleteHoe() {
+    public void deleteTool() {
         for (int i = 0; i < inventorySlots.Length; ++i) {
             InventorySlot slot = inventorySlots[i];
             InventoryItem itemInSlot = slot.GetComponentInChildren<InventoryItem>();
 
-            if (itemInSlot != null && itemInSlot.item == items[1]) {
+            if (itemInSlot != null && (itemInSlot.item == items[1] || itemInSlot.item == items[2] || itemInSlot.item == items[3])) {
                 Destroy(itemInSlot.gameObject);
                 return;
             }

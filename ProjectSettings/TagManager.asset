@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Hoe
   - Apple
+  - Shovel
+  - Fork
   layers:
   - Default
   - TransparentFX
