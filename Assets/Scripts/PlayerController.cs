@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public InventoryManager inventoryManager;
     public CollectedCount collectedCount;
     public PlayerTool toolInHand;
+    public AudioSource harvestSound;
+    public AudioSource depositeSound;
 
     Vector2 playerMovement;
     float PlayerSize = 5f;
@@ -51,7 +53,11 @@ public class PlayerController : MonoBehaviour
     }
 
     public void Harvest() {
+        
         Collider2D[] reachableTrees = Physics2D.OverlapCircleAll(transform.position, harvestRange, treeLayer);
+        if (reachableTrees.Length > 0) {
+            harvestSound.Play();
+        }
         foreach (Collider2D tree in reachableTrees) {
             toolEndurance -= 1;
             int fruitToPick = tree.gameObject.GetComponent<TreeController>().pickFruit(harvestRate);
@@ -59,7 +65,7 @@ public class PlayerController : MonoBehaviour
             if (toolEndurance <= 0) {
                 toolEndurance = 0;
                 harvestRate = 1;
-                inventoryManager.deleteHoe();
+                inventoryManager.deleteTool();
                 toolInHand.lostTool();
             }
         }
@@ -69,19 +75,35 @@ public class PlayerController : MonoBehaviour
     void Deposite() {
         Collider2D[] deposites = Physics2D.OverlapCircleAll(transform.position, harvestRange, depositeLayer);
         if (deposites.Length > 0) {
+            depositeSound.Play();
             int picked = inventoryManager.DepositeFruit();
             collectedCount.UpdateCount(picked);
-            //Debug.Log("deposite " + fruitInventory + " fruits");
-            //fruitInventory = 0;
         }
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.gameObject.CompareTag("Hoe")) {
+        if (collision.gameObject.CompareTag("Shovel")) {
+            Sprite toolSP = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
             harvestRate = 2;
             toolEndurance = 2;
-            inventoryManager.GetHoe();
-            toolInHand.getTool(2);
+            inventoryManager.GetTool(2);
+            toolInHand.setToolSprite(toolSP);
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Fork")) {
+            Sprite toolSP = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
+            harvestRate = 2;
+            toolEndurance = 2;
+            inventoryManager.GetTool(3);
+            toolInHand.setToolSprite(toolSP);
+            Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.CompareTag("Hoe")) {
+            Sprite toolSP = collision.gameObject.GetComponent<SpriteRenderer>().sprite;
+            harvestRate = 2;
+            toolEndurance = 2;
+            inventoryManager.GetTool(1);
+            toolInHand.setToolSprite(toolSP);
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.CompareTag("Apple")) {
